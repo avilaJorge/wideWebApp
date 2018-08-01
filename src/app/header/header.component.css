@@ -1,3 +1,4 @@
+
 ul {
   list-style: none;
   padding: 0;
@@ -17,3 +18,13 @@ ul {
 .spacer {
   flex: 1 1 auto;
 }
+
+mat-button-toggle {
+  text-decoration: none;
+  color: white;
+}
+
+/*.lower-toolbar {*/
+  /*height: 25px;*/
+/*}*/
+

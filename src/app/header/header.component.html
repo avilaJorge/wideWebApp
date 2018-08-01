@@ -1,20 +1,88 @@
-<mat-toolbar color="primary">
-  <span>
-    <a routerLink="/">WIDE</a>
-  </span>
-  <span class="spacer"></span>
-  <ul>
-    <li *ngIf="userIsAuthenticated">
-      <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Post</a>
-    </li>
-    <li *ngIf="!userIsAuthenticated">
-      <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">Login</a>
-    </li>
-    <li *ngIf="!userIsAuthenticated">
-      <a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">Signup</a>
-    </li>
-    <li *ngIf="userIsAuthenticated">
-      <button mat-button (click)="onLogout()">Logout</button>
-    </li>
-  </ul>
-</mat-toolbar>
+<mat-sidenav-container>
+  <mat-toolbar color="primary">
+    <span>
+        <a routerLink="/">WIDE</a>
+      </span>
+      <span class="spacer"></span>
+      <span class="d-none d-md-inline">
+      <button mat-button class="nav-button" *ngFor="let item of navigation"
+              [routerLink]="[item.link]" routerLinkActive="mat-accent">
+        {{item.label}}
+      </button>
+    </span>
+      <ul>
+        <li *ngIf="!userIsAuthenticated">
+          <a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">Login</a>
+        </li>
+        <li *ngIf="!userIsAuthenticated">
+          <a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">Signup</a>
+        </li>
+        <li *ngIf="userIsAuthenticated">
+          <button mat-button (click)="onLogout()">Logout</button>
+        </li>
+      </ul>
+  </mat-toolbar>
+</mat-sidenav-container>
+
+  <!--<mat-toolbar-row>-->
+    <!--<span>-->
+      <!--<a routerLink="/">WIDE</a>-->
+    <!--</span>-->
+    <!--<span class="spacer"></span>-->
+    <!--<ul>-->
+      <!--<li *ngIf="!userIsAuthenticated">-->
+        <!--<a mat-button routerLink="/auth/login" routerLinkActive="mat-accent">Login</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="!userIsAuthenticated">-->
+        <!--<a mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">Signup</a>-->
+      <!--</li>-->
+      <!--<li *ngIf="userIsAuthenticated">-->
+        <!--<button mat-button (click)="onLogout()">Logout</button>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<mat-button-toggle-group>-->
+      <!--<mat-button-toggle (click)="selectedTab=0">Home</mat-button-toggle>-->
+      <!--<mat-button-toggle (click)="selectedTab=1">MapMyWalk</mat-button-toggle>-->
+      <!--<mat-button-toggle (click)="selectedTab=2">GetItDone SD</mat-button-toggle>-->
+      <!--<mat-button-toggle (click)="selectedTab=3">Meetup</mat-button-toggle>-->
+    <!--</mat-button-toggle-group>-->
+  <!--</mat-toolbar-row>-->
+  <!--<mat-toolbar-row class="lower-toolbar">-->
+    <!--<span class="spacer"></span>-->
+    <!--<ul *ngIf="selectedTab==0">-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">MyInfo</a>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<ul *ngIf="selectedTab==1">-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">Routes</a>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">My Walking Info</a>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<ul *ngIf="selectedTab==2">-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">Recent Reports</a>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">My Reports</a>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">Submit Report</a>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<ul *ngIf="selectedTab==3">-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">Explore Walking Groups</a>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">My Groups</a>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<a mat-button routerLink="/" routerLinkActive="mat-accent">Calendar</a>-->
+      <!--</li>-->
+    <!--</ul>-->
+  <!--</mat-toolbar-row>-->
+
