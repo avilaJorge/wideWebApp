@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../services/auth/auth.service';
 
@@ -8,7 +8,7 @@ import {AuthService} from '../services/auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy{
 
   userIsAuthenticated = false;
   navigation = [
@@ -20,20 +20,27 @@ export class HeaderComponent implements OnInit {
   private authStatusSub: Subscription;
 
   constructor(
-    private authService: AuthService) {
-
+    private authService: AuthService,
+    private dcRef: ChangeDetectorRef) {
+    console.log('Header Component constructor was called and auth is ' + this.userIsAuthenticated);
     this.authStatusSub = this.authService.getAuthStatusListener()
       .subscribe((authStatus) => {
         console.log(authStatus);
         this.userIsAuthenticated = authStatus;
+        this.dcRef.detectChanges();
       });
   }
 
 
   ngOnInit() {
-
+    console.log('ngOnInit called in header component');
+    this.userIsAuthenticated = this.authService.getIsAuth();
   }
 
+  ngOnDestroy() {
+    console.log('On Destroy called in header component');
+    this.authStatusSub.unsubscribe();
+  }
 
   onLogout() {
     this.authService.signOut();

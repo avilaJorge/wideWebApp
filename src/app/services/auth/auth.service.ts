@@ -47,4 +47,15 @@ export class AuthService {
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
+
+  getIsAuth() {
+    return this.isAuthenticated;
+  }
+
+  checkUserAuth() {
+    if (this.fireAuth.auth.currentUser) {
+      console.log('Were good!');
+      this.isAuthenticated = true;
+    }
+  }
 }

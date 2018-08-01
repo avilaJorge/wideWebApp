@@ -33,6 +33,7 @@ import { MeetupComponent } from './meetup/meetup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { environment } from '../environments/environment';
+import {AuthService} from './services/auth/auth.service';
 
 @NgModule({
   declarations: [

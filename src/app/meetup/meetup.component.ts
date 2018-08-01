@@ -13,12 +13,12 @@ export class MeetupComponent implements OnInit {
 
   private location = '92092';
   private nearbyMeetupsSubscription: Subscription;
-  nearbyMeetups: Meetup[];
+  nearbyMeetups: Meetup[] = [];
 
   constructor(private meetupApi: MeetupApiService) { }
 
   ngOnInit() {
-
+    console.log('Meetup ngOnInit was called!');
     this.nearbyMeetupsSubscription = this.meetupApi.getNearbyMeetupsListener()
       .subscribe((meetups) => {
         this.nearbyMeetups = meetups;
@@ -26,7 +26,7 @@ export class MeetupComponent implements OnInit {
       }, (error) => {
         console.log('Error getting meetups data in listener');
       });
-    this.meetupApi.getNearbyMeetups(this.location);
+    this.nearbyMeetups = this.meetupApi.getMeetups();
   }
 
 }

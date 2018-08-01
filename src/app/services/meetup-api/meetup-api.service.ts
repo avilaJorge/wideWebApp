@@ -13,6 +13,7 @@ import {Meetup} from '../../models/meetup.model';
 export class MeetupApiService {
 
   private url = 'https://api.meetup.com/';
+  private location = '92092';
 
   private params = new HttpParams()
     .set('sign', 'true')
@@ -23,22 +24,24 @@ export class MeetupApiService {
     .set('radius', '25')
     .set('category', '9')
     .set('order', 'most_active')
-    .set('page', '20')
+    .set('page', '5')
     .set('key', environment.meetupConfig.apiKey);
 
-  private nearbyMeetups: Meetup[];
+  private nearbyMeetups: Meetup[] = [];
   private nearbyMeetupsSubject = new Subject<Meetup[]>();
 
 
-  constructor( private httpClient: HttpClient) { }
+  constructor( private httpClient: HttpClient) {
+    this.getNearbyMeetups(this.location);
+  }
 
   getNearbyMeetupsListener(): Observable<Meetup[]> {
     return this.nearbyMeetupsSubject.asObservable();
   }
 
-  getNearbyMeetups(location: string): void {
-    const options = { params: this.params.set('zip', location) };
-    this.httpClient.jsonp<{meta: string, data: Meetup[]}>(this.url + 'find/groups?' + options.params.toString(), 'callback')
+  getNearbyMeetups(location: string) {
+    const options = {params: this.params.set('zip', location)};
+    this.httpClient.jsonp<{ meta: string, data: Meetup[] }>(this.url + 'find/groups?' + options.params.toString(), 'callback')
       .pipe(map((meetupData) => {
         console.log(typeof(meetupData));
         console.log(meetupData);
@@ -54,4 +57,9 @@ export class MeetupApiService {
         console.log(error);
       });
   }
+
+  getMeetups(): Meetup[] {
+    return [...this.nearbyMeetups];
+  }
+
 }
