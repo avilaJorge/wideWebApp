@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 
+import { environment } from '../../../environments/environment';
 import {Meetup} from '../../models/meetup.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,13 @@ export class MeetupApiService {
     .set('category', '9')
     .set('order', 'most_active')
     .set('page', '20')
-    .set('key', environment.meetupApiKey);
+    .set('key', environment.meetupConfig.apiKey);
 
   private nearbyMeetups: Meetup[];
   private nearbyMeetupsSubject = new Subject<Meetup[]>();
 
 
-  constructor( private httpClient: HttpClient ) { }
+  constructor( private httpClient: HttpClient) { }
 
   getNearbyMeetupsListener(): Observable<Meetup[]> {
     return this.nearbyMeetupsSubject.asObservable();
@@ -37,10 +38,11 @@ export class MeetupApiService {
 
   getNearbyMeetups(location: string): void {
     const options = { params: this.params.set('zip', location) };
-    this.httpClient.get<Meetup[]>(this.url + 'find/groups', options)
+    this.httpClient.jsonp<{meta: string, data: Meetup[]}>(this.url + 'find/groups?' + options.params.toString(), 'callback')
       .pipe(map((meetupData) => {
+        console.log(typeof(meetupData));
         console.log(meetupData);
-        return meetupData.map((meetup) => {
+        return meetupData.data.map((meetup) => {
           return new Meetup(meetup);
         });
       }))
