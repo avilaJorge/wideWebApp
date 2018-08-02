@@ -19,6 +19,7 @@ import {
   MatSidenavModule,
   MatIconModule,
   MatMenuModule,
+  MatGridListModule,
 } from '@angular/material';
 import { AngularFireModule} from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -33,7 +34,6 @@ import { MeetupComponent } from './meetup/meetup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { environment } from '../environments/environment';
-import {AuthService} from './services/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -70,6 +70,7 @@ import {AuthService} from './services/auth/auth.service';
     MatSidenavModule,
     MatIconModule,
     MatMenuModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ]

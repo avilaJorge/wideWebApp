@@ -1,17 +1,37 @@
-<div class="card-container" *ngFor="let item of nearbyMeetups">
-  <mat-card class="meetup-card">
-    <mat-card-header>
-      <img [src]="item.organizer_photo" mat-card-avatar>
-      <mat-card-title>{{ item.name }}</mat-card-title>
-      <mat-card-subtitle>Organizer: {{ item.organizer_name }}</mat-card-subtitle>
-    </mat-card-header>
-    <img *ngIf="item.key_photo" class="group-image" mat-card-image [src]="item.key_photo" alt="Group Photo for {{ item.name }}">
-    <mat-card-content>
-      <div [innerHTML]="item.description"></div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+<mat-grid-list cols="4" rowHeight="300px">
+  <mat-grid-tile colspan="2" rowspan="2">
+    <div class="card-container" *ngFor="let item of nearbyMeetup">
+      <mat-card class="meetup-card">
+        <mat-card-header>
+          <img [src]="item.organizer_photo" mat-card-avatar>
+          <mat-card-title>{{ item.name }}</mat-card-title>
+          <mat-card-subtitle>Organizer: {{ item.organizer_name }}</mat-card-subtitle>
+        </mat-card-header>
+        <img *ngIf="item.key_photo" class="group-image" mat-card-image [src]="item.key_photo" alt="Group Photo for {{ item.name }}">
+        <mat-card-content>
+          <div [innerHTML]="item.description"></div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+      <button
+        class="left-arrow"
+        mat-icon-button
+        color="primary"
+        (click)="onSwitchLeft()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <button
+        class="left-arrow"
+        mat-icon-button
+        color="primary"
+        (click)="onSwitchRight()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
