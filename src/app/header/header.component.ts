@@ -11,6 +11,7 @@ import {AuthService} from '../services/auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy{
 
   userIsAuthenticated = false;
+  userPhoto = '';
   navigation = [
     { link: 'home', label: 'Home' },
     { link: 'mapmywalk', label: 'MapMyWalk' },
@@ -27,6 +28,12 @@ export class HeaderComponent implements OnInit, OnDestroy{
       .subscribe((authStatus) => {
         console.log(authStatus);
         this.userIsAuthenticated = authStatus;
+        const currentUser = this.authService.getActiveUser();
+        if (currentUser && currentUser.photoURL) {
+          this.userPhoto = currentUser.photoURL;
+        } else {
+          this.userPhoto = '';
+        }
         this.dcRef.detectChanges();
       });
   }

@@ -44,4 +44,14 @@ export class SigninComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }
+
+  onLoginWithGoogle() {
+    this.authService.signInGoogle()
+      .then((data) => {
+        console.log(data);
+        this.isLoading = false;
+        this.router.navigate(['/']);
+      })
+      .catch((error) => console.log(error));
+  }
 }

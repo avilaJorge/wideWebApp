@@ -36,6 +36,10 @@ export class AuthService {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
+  signInGoogle() {
+    return this.fireAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider);
+  }
+
   signOut(): Promise<void> {
     return this.fireAuth.auth.signOut();
   }
