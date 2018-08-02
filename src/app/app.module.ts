@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import {HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 import {
   MatButtonModule,
@@ -33,7 +33,11 @@ import { GetItDoneComponent } from './get-it-done/get-it-done.component';
 import { MeetupComponent } from './meetup/meetup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { ErrorComponent } from './error/error.component';
 import { environment } from '../environments/environment';
+
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,8 @@ import { environment } from '../environments/environment';
     GetItDoneComponent,
     MeetupComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +77,19 @@ import { environment } from '../environments/environment';
     MatMenuModule,
     MatGridListModule,
   ],
-  providers: [],
-  bootstrap: [ AppComponent ]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [ AppComponent ],
+  entryComponents: [ ErrorComponent ]
 })
 export class AppModule { }

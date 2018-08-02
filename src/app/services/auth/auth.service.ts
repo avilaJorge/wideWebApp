@@ -73,7 +73,7 @@ export class AuthService {
           this.userPhoto = res.user.photoURL;
           this.authStatusListener.next(true);
           this.saveAuthData(token, this.userPhoto, this.userId);
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         }
       }).catch((err) => {
       console.log('Error occurred while logging in user');
@@ -94,7 +94,7 @@ export class AuthService {
           this.userPhoto = res.user.photoURL;
           this.authStatusListener.next(true);
           this.saveAuthData(token, this.userPhoto, this.userId);
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         }
       }).catch((err) => {
         console.log('Error occurred while logging in user');
@@ -120,7 +120,7 @@ export class AuthService {
     this.currentlyLoggedInUser = null;
     this.authStatusListener.next(false);
     this.clearAuthData();
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
 
   }
 

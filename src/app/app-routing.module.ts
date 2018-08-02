@@ -7,6 +7,7 @@ import {GetItDoneComponent} from './get-it-done/get-it-done.component';
 import {MeetupComponent} from './meetup/meetup.component';
 import {SigninComponent} from './auth/signin/signin.component';
 import {SignupComponent} from './auth/signup/signup.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,13 +15,13 @@ const routes: Routes = [
   {path: 'mapmywalk', component: MapMyWalkComponent},
   {path: 'getitdone-sd', component: GetItDoneComponent},
   {path: 'meetup', component: MeetupComponent},
-  {path: 'auth/login', component: SigninComponent},
-  {path: 'auth/signup', component: SignupComponent}
+  {path: 'login', component: SigninComponent},
+  {path: 'signup', component: SignupComponent}
 ]
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ], // , { enableTracing: true }) ],
   exports: [ RouterModule ],
-  // providers: [ AuthGuard ]
+  providers: [ AuthGuard ]
 })
 export class AppRoutingModule {}
