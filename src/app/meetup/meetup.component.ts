@@ -21,14 +21,12 @@ export class MeetupComponent implements OnInit {
   constructor(private meetupApi: MeetupApiService) { }
 
   ngOnInit() {
-    console.log('Meetup ngOnInit was called!');
     this.nearbyMeetupsSubscription = this.meetupApi.getNearbyMeetupsListener()
       .subscribe((meetups) => {
         this.nearbyMeetups = meetups;
         if (this.nearbyMeetup.length < 1) {
           this.nearbyMeetup.push(this.nearbyMeetups[this.indexCounter]);
         }
-        console.log(this.nearbyMeetups);
       }, (error) => {
         console.log('Error getting meetups data in listener');
       });
@@ -44,13 +42,11 @@ export class MeetupComponent implements OnInit {
     } else {
       this.indexCounter %= this.totalMeetups;
     }
-    console.log(this.indexCounter);
     this.nearbyMeetup[0] = this.nearbyMeetups[this.indexCounter];
   }
 
   onSwitchRight() {
     this.indexCounter = ++this.indexCounter % this.totalMeetups;
-    console.log(this.indexCounter);
     this.nearbyMeetup[0] = this.nearbyMeetups[this.indexCounter];
   }
 

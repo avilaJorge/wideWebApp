@@ -16,12 +16,12 @@ export class SigninComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
 
   constructor(
-    public authService: AuthService,
-    public router: Router) {}
+    public authService: AuthService) {}
 
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener()
       .subscribe((authStatus) => {
+        console.log('Loading is now false');
         this.isLoading = false;
       });
   }
@@ -31,27 +31,15 @@ export class SigninComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.authService.signInEmail(form.value.email, form.value.password)
-      .then((data) => {
-        console.log(data);
-        this.isLoading = false;
-        this.router.navigate(['/']);
-      })
-      .catch((error) => {});
+    this.authService.signInEmail(form.value.email, form.value.password);
   }
-
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
   }
 
   onLoginWithGoogle() {
-    this.authService.signInGoogle()
-      .then((data) => {
-        console.log(data);
-        this.isLoading = false;
-        this.router.navigate(['/']);
-      })
-      .catch((error) => console.log(error));
+    this.isLoading = true;
+    this.authService.signInGoogle();
   }
 }

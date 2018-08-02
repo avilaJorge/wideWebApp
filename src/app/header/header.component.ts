@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../services/auth/auth.service';
 
@@ -8,7 +8,7 @@ import {AuthService} from '../services/auth/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy{
+export class HeaderComponent implements OnInit, OnDestroy {
 
   userIsAuthenticated = false;
   userPhoto = '';
@@ -21,27 +21,28 @@ export class HeaderComponent implements OnInit, OnDestroy{
   private authStatusSub: Subscription;
 
   constructor(
-    private authService: AuthService,
-    private dcRef: ChangeDetectorRef) {
-    console.log('Header Component constructor was called and auth is ' + this.userIsAuthenticated);
+    private authService: AuthService) {
     this.authStatusSub = this.authService.getAuthStatusListener()
       .subscribe((authStatus) => {
-        console.log(authStatus);
         this.userIsAuthenticated = authStatus;
-        const currentUser = this.authService.getActiveUser();
-        if (currentUser && currentUser.photoURL) {
-          this.userPhoto = currentUser.photoURL;
-        } else {
-          this.userPhoto = '';
+        if (authStatus) {
+          const userInfo = this.authService.getUserInfo();
+          if (userInfo.userPhoto) {
+            this.userPhoto = userInfo.userPhoto;
+          } else {
+            this.userPhoto = '';
+          }
         }
-        this.dcRef.detectChanges();
       });
   }
 
 
   ngOnInit() {
-    console.log('ngOnInit called in header component');
-    this.userIsAuthenticated = this.authService.getIsAuth();
+    const user = this.authService.getUserInfo();
+    this.userIsAuthenticated = user.isAuthenticated;
+    if (this.userIsAuthenticated) {
+      this.userPhoto = user.userPhoto;
+    }
   }
 
   ngOnDestroy() {
@@ -50,6 +51,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
   onLogout() {
+    this.userIsAuthenticated = false;
+    this.userPhoto = '';
     this.authService.signOut();
   }
 }

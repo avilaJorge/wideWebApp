@@ -45,8 +45,6 @@ export class MeetupApiService {
     const options = {params: this.params.set('zip', location)};
     this.httpClient.jsonp<{ meta: string, data: Meetup[] }>(this.url + 'find/groups?' + options.params.toString(), 'callback')
       .pipe(map((meetupData) => {
-        console.log(typeof(meetupData));
-        console.log(meetupData);
         return meetupData.data.map((meetup) => {
           return new Meetup(meetup);
         });
