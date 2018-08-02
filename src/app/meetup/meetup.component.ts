@@ -53,4 +53,8 @@ export class MeetupComponent implements OnInit {
     console.log(this.indexCounter);
     this.nearbyMeetup[0] = this.nearbyMeetups[this.indexCounter];
   }
+
+  onMeetupLogin() {
+    this.meetupApi.meetupLogin();
+  }
 }

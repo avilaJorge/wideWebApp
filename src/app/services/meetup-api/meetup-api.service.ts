@@ -31,7 +31,9 @@ export class MeetupApiService {
   private nearbyMeetupsSubject = new Subject<Meetup[]>();
 
 
-  constructor( private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient) {
+
     this.getNearbyMeetups(this.location);
   }
 
@@ -60,6 +62,10 @@ export class MeetupApiService {
 
   getMeetups(): Meetup[] {
     return [...this.nearbyMeetups];
+  }
+
+  meetupLogin() {
+    window.open(environment.meetupConfig.meetupOAuthURL);
   }
 
 }
